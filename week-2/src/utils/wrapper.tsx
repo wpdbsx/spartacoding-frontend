@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MemoryRouter } from 'react-router-dom';
 import { MutableSnapshot, RecoilRoot } from 'recoil';
 
@@ -11,8 +12,10 @@ export const Wrapper = ({
   initializeState?: (mutableSnapshot: MutableSnapshot) => void;
 }) => {
   return (
-    <RecoilRoot initializeState={initializeState}>
-      <MemoryRouter initialEntries={[initialEntry]}>{children}</MemoryRouter>
-    </RecoilRoot>
+    <QueryClientProvider client={new QueryClient()}>
+      <RecoilRoot initializeState={initializeState}>
+        <MemoryRouter initialEntries={[initialEntry]}>{children}</MemoryRouter>
+      </RecoilRoot>
+    </QueryClientProvider>
   );
 };
